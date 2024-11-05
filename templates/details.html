@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/view_details.css') }}">
+{% endblock %}
+
+{% block body %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{{ url_for('static', filename='img/bg1.jpg') }}');">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto text-center">
+          <div class="post-heading">
+            <h1>View Details</h1>
+            <h2 class="subheading">Medical Records Details</h2>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <div class="container text-center mt-4">
+    <a href="/sp">
+      <button class="btn btn-danger">Stored Details</button>
+      <h4>Click here to view Recorded Information</h4>
+    </a>
+  </div>
+
+  <div class="container mt-5">
+    <p>Medical management information, including date and timings, stored below:</p>            
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Medical ID (mid)</th>
+          <th>Actions</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+            <td>{{ post.mid }}</td>
+            <td>{{ post.action }}</td>
+            <td>{{ post.date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- JavaScript Libraries -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Custom Scripts for this Template -->
+  <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+/* custom.css */
+
+/* Masthead styling */
+.masthead {
+    height: 50vh;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: #f8f9fa;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .page-heading h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .page-heading p {
+    font-size: 1.2rem;
+    color: #ddd;
+  }
+  
+  /* Form styling */
+  .form-control {
+    border-radius: 0.3rem;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+  }
+  
+  .btn-primary {
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background-color: #4cae4c;
+    border-color: #4cae4c;
+  }
+  
+  .container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .alert-dismissible .close {
+    color: #fff;
+  }
+  
+  .help-block {
+    font-size: 0.9rem;
+    color: #dc3545;
+  }

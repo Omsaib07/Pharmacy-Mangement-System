@@ -1,0 +1,19 @@
+{
+  "params":
+  {
+   "local_server": "True",
+    "local_uri": "mysql://root:@localhost/Medical",
+    "proud_uri": "mysql://root:@localhost/Medical",
+    "fb_url":"https://www.facebook.com/aneesurrehman.aneesrehman/",
+    "tw_url":"https://www.facebook.com/aneesurrehman.aneesrehman/",
+    "gh_url":"https://github.com/arkprocoder",
+    "blog_name": "WELCOME",
+    "headname": "MEDICAL SUPPLY MANAGEMENT",
+    "user": "root",
+    "password": "Omsai7@sql",
+    "login_image": "logi.jpg",
+    "database":"Medical",
+    "recaptcha_secret_key": "6Leoh3UqAAAAAM8CKhf32Te4FlL5ka8ztWzkORI5"
+
+  }
+}

@@ -1,0 +1,63 @@
+/* search_record.css */
+
+/* Masthead styling */
+.masthead {
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: #f8f9fa;
+    margin-bottom: 0;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .page-heading h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .page-heading .subheading {
+    font-size: 1.1rem;
+    color: #dddddd;
+  }
+  
+  /* Alert styling */
+  .alert-dismissible .close {
+    color: #ffffff;
+  }
+  
+  /* Button styling */
+  .btn-warning,
+  .btn-outline-success {
+    margin: 0.5rem;
+  }
+  
+  .form-inline .form-control {
+    margin-right: 0.5rem;
+  }
+  
+  /* Badge styling */
+  h2 span.badge {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #343a40;
+    background-color: #f1f1f1;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Form field styling */
+  .form-row .form-control {
+    border: 1px solid #ced4da;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }

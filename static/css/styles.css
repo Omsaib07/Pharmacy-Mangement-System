@@ -1,0 +1,117 @@
+/* styles.css */
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    background-color: #eef2f5; /* Light gray background for a soft look */
+    color: #4a4a4a; /* Dark gray text */
+}
+
+.navbar {
+    background-color: #343a40; /* Dark navbar */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.nav-link {
+    color: #ffffff; /* White links */
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #f8f9fa; /* Lighter on hover */
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #007bff; /* Primary color for headings */
+}
+
+.footer {
+    background-color: #343a40; /* Match footer with navbar */
+    color: #ffffff;
+    padding: 40px 0; /* Increased padding for a spacious footer */
+}
+
+.footer a {
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.list-inline-item {
+    margin: 0 15px;
+}
+
+.table {
+    margin-top: 20px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #ffffff; /* White background for the table */
+}
+
+.table thead {
+    background-color: #007bff; /* Blue header */
+    color: #ffffff;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.table tr {
+    transition: background-color 0.3s;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1; /* Light gray highlight on hover */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border-color: #007bff; /* Match border */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Danger button color */
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem; /* Responsive heading size */
+    }
+}

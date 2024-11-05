@@ -1,0 +1,170 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/static/img/loginpage_files/LoginBg.jpg"); /* Your image path */
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevents image repetition */
+  background-attachment: fixed; /* Keeps the background in place when scrolling */
+  margin: 0; /* Ensures no default margin on the body */
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 350px;
+  padding: 20px 25px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.form-signin .form-control {
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  animation: fadeIn 1.7s ease-in-out;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+  border-color: #007bff;
+  outline: none;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 15px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  animation: buttonPulse 2s infinite ease-in-out;
+}
+
+.form-signin button:hover {
+  background-color: #0056b3;
+}
+
+.form-signin h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  animation: fadeIn 1.3s ease-in-out;
+}
+
+.form-signin p {
+  font-size: 14px;
+  color: #777;
+  animation: fadeIn 1.6s ease-in-out;
+}
+.alert {
+  max-width: 400px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* Centering and styling enhancements */
+
+
+.form-signin {
+  width: 100%;
+  max-width: 360px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.form-signin img {
+  border-radius: 50%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-signin input.form-control {
+  margin-bottom: 15px;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.form-signin input.form-control:focus {
+  border-color: #007bff;
+}
+
+.form-signin button {
+  background: #007bff;
+  border: none;
+  transition: background 0.3s ease;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.form-signin button:hover {
+  background: #0056b3;
+}
+
+.badge-dark {
+  background-color: #333;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

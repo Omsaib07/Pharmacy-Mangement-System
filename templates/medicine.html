@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+{% endblock %}
+
+{% block body %}
+
+  <!-- Page Header -->
+  <header class="masthead mb-0" style="background-image: url('{{ url_for('static', filename='img/gmail.jpg') }}');">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto text-center">
+          <div class="page-heading">
+            <h1>Medicines and Products</h1>
+            <p>Do you have questions? I have answers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Flash Messages -->
+  {% with messages=get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container mt-3">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Main Content -->
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
+
+        <form name="sentMessage" id="contactForm" action="/medicines" method="post" novalidate>
+
+          <!-- Medical ID -->
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label for="mid">Medical ID</label>
+              <input type="number" name="mid" class="form-control" placeholder="Enter Medical ID" id="mid" required>
+              <small class="text-danger validation-message" style="display: none;">Please enter the medical ID.</small>
+            </div>
+          </div>
+        
+          <!-- Name -->
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label for="name">Name</label>
+              <input type="text" name="name" class="form-control" placeholder="Enter name" id="name" required>
+              <small class="text-danger validation-message" style="display: none;">Please enter the name.</small>
+            </div>
+          </div>
+        
+          <!-- Email -->
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label for="email">Email ID</label>
+              <input type="email" name="email" class="form-control" placeholder="Enter your email ID" id="email" required
+                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+              <small class="text-danger validation-message" style="display: none;">Please enter a valid email ID.</small>
+            </div>
+          </div>
+        
+          <!-- Medicines -->
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label for="medicines">Medicines</label>
+              <textarea rows="5" class="form-control" placeholder="Enter medicine names" id="medicines" name="medicines" required></textarea>
+              <small class="text-danger validation-message" style="display: none;">Please enter medicines/products/syrups.</small>
+            </div>
+          </div>
+        
+          <!-- Products -->
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label for="products">Products</label>
+              <textarea rows="5" class="form-control" placeholder="Enter product names" id="products" name="products" required></textarea>
+              <small class="text-danger validation-message" style="display: none;">Please enter products/syrups.</small>
+            </div>
+          </div>
+        
+          <!-- Amount (Must Be Greater Than 0) -->
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label for="amount">Amount</label>
+              <input type="number" name="amount" class="form-control" placeholder="Enter amount" id="amount" required min="1">
+              <small class="text-danger validation-message" style="display: none;">Please enter an amount greater than 0.</small>
+            </div>
+          </div>
+        
+          <!-- Submit Button -->
+          <div class="form-group text-center">
+            <button onclick="return confirm('Are you sure you want to save this data?');" type="submit" class="btn btn-primary btn-lg px-5" id="sendMessageButton">Send</button>
+          </div>
+        </form>
+        
+        <script>
+          document.getElementById('contactForm').addEventListener('submit', function(event) {
+            let isValid = true;
+            const fields = this.querySelectorAll('input[required], textarea[required]');
+        
+            fields.forEach(field => {
+              const errorMessage = field.nextElementSibling;
+              if (!field.checkValidity()) {
+                isValid = false;
+                errorMessage.style.display = 'block'; // Show the error message
+              } else {
+                errorMessage.style.display = 'none'; // Hide the error message
+              }
+              
+              // Additional check for the Amount field
+              if (field.id === "amount" && field.value <= 0) {
+                isValid = false;
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = "Please enter an amount greater than 0.";
+              }
+            });
+        
+            if (!isValid) {
+              event.preventDefault(); // Prevent form submission if there are invalid fields
+              alert("Please fill out all required fields correctly.");
+            }
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- JavaScript Libraries -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Form Validation Scripts -->
+  <script src="{{ url_for('static', filename='js/jqBootstrapValidation.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/contact_me.js') }}"></script>
+
+  <!-- Custom Scripts for this Template -->
+  <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
+
+{% endblock %}
