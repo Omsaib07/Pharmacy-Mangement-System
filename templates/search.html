@@ -59,7 +59,11 @@
       <div class="form-row">
         <div class="col-md-4 mb-3">
           <label for="medicine">Medicines</label>
-          <input type="text" class="form-control" name="medicine" id="medicine" placeholder="Add Medicine" autocomplete="on">
+          <input type="text" class="form-control" name="medicine" id="medicine" placeholder="Add Medicine" autocomplete="on" required>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
         </div>
       </div>
       <button class="btn btn-primary" type="submit">Add Medicines</button>
@@ -70,7 +74,11 @@
       <div class="form-row">
         <div class="col-md-4 mb-3">
           <label for="product">Products</label>
-          <input type="text" class="form-control" name="product" id="product" placeholder="Add Products" autocomplete="on">
+          <input type="text" class="form-control" name="product" id="product" placeholder="Add Products" autocomplete="on" required>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
         </div>
       </div>
       <button class="btn btn-primary" type="submit">Add Products</button>

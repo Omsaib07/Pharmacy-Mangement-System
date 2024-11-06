@@ -72,24 +72,34 @@
             </div>
           </div>
         
-          <!-- Medicines -->
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="medicines">Medicines</label>
-              <textarea rows="5" class="form-control" placeholder="Enter medicine names" id="medicines" name="medicines" required></textarea>
-              <small class="text-danger validation-message" style="display: none;">Please enter medicines/products/syrups.</small>
-            </div>
-          </div>
-        
-          <!-- Products -->
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="products">Products</label>
-              <textarea rows="5" class="form-control" placeholder="Enter product names" id="products" name="products" required></textarea>
-              <small class="text-danger validation-message" style="display: none;">Please enter products/syrups.</small>
-            </div>
-          </div>
-        
+          <!-- Medicines Dropdown -->
+<div class="control-group">
+  <div class="form-group floating-label-form-group controls">
+      <label for="medicines">Select Medicines</label>
+      <select name="medicines" class="form-control" id="medicines" required>
+          <option value="">-- Select Medicine --</option>
+          {% for medicine in medicines %}
+              <option value="{{ medicine.sno }}">{{ medicine.medicine }}</option>  <!-- Use 'medicine' directly -->
+          {% endfor %}
+      </select>
+      <small class="text-danger validation-message" style="display: none;">Please select a medicine.</small>
+  </div>
+</div>
+
+<!-- Products Dropdown -->
+<div class="control-group">
+  <div class="form-group floating-label-form-group controls">
+      <label for="products">Select Products</label>
+      <select name="products" class="form-control" id="products" required>
+          <option value="">-- Select Product --</option>
+          {% for product in products %}
+              <option value="{{ product.sno }}">{{ product.product }}</option>  <!-- Use 'product' directly -->
+          {% endfor %}
+      </select>
+      <small class="text-danger validation-message" style="display: none;">Please select a product.</small>
+  </div>
+</div>
+
           <!-- Amount (Must Be Greater Than 0) -->
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">

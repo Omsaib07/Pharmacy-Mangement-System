@@ -121,22 +121,17 @@ CREATE TRIGGER `Update` AFTER UPDATE ON `medicines` FOR EACH ROW INSERT INTO Log
 $$
 DELIMITER ;
 
-DELIMITER $$
+DELIMITER //
 
-CREATE TRIGGER PreventNegativeMID
+CREATE TRIGGER check_negative_quantity
 BEFORE INSERT ON medicines
 FOR EACH ROW
 BEGIN
     IF NEW.mid < 0 THEN
-        -- Log the error occurrence
-        INSERT INTO Logs (id, mid, action, date) 
-        VALUES (NULL, NEW.mid, 'ATTEMPTED NEGATIVE MID INSERT', NOW());
-
-        -- Raise an error to prevent the insert
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'Error: mid cannot be a negative value.';
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Negative values cannot be inserted into the quantity column.';
     END IF;
-END$$
+END//
 
 DELIMITER ;
 
@@ -224,11 +219,41 @@ ALTER TABLE `medicines`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+
+
+ALTER TABLE addmp ADD COLUMN quantity INT DEFAULT 0;
+ALTER TABLE addpd ADD COLUMN quantity INT DEFAULT 0;
+
 -- AUTO_INCREMENT for table `posts`
 --
+
 ALTER TABLE `posts`
   MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1002;
 COMMIT;
+
+DELIMITER //
+
+CREATE PROCEDURE upsert_medicine(IN med_name VARCHAR(500), IN new_quantity INT)
+BEGIN
+    DECLARE existing_id INT;
+
+    -- Check if the medicine exists
+    SELECT id INTO existing_id
+    FROM Medicines
+    WHERE name = med_name;
+
+    -- If it exists, update the quantity; if not, insert a new row
+    IF existing_id IS NOT NULL THEN
+        UPDATE Medicines
+        SET amount = amount + new_quantity
+        WHERE id = existing_id;
+    ELSE
+        INSERT INTO Medicines (name, amount)
+        VALUES (med_name, new_quantity);
+    END IF;
+END //
+
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

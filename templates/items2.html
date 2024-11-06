@@ -2,7 +2,7 @@
 {% block body %}
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{url_for('static',filename='img/bg1.jpg')}}">
+  <header class="masthead" style="background-image: url('{{url_for('static', filename='img/bg1.jpg')}}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -16,37 +16,26 @@
     </div>
   </header>
 
- <p>Avalaible items in our pharamacy </p>            
+  <p>Available items in our pharmacy</p>            
   <table class="table">
     <thead class="thead-dark">
       <tr>
-        <th>Sno </th>
-        <th>Products</th>
-
-        
-    
+        <th>Sno</th>
+        <th>Product</th>
+        <th>Quantity</th>
       </tr>
     </thead>
     <tbody>
-
       {% for post in posts %} 
       <tr>
-
-        
-        <td>{{post.sno}}</td>
-       
-        <td>{{post.product}}</td>
-        
-        
- 
-       </tr>
-       
+        <td>{{ post.sno }}</td>
+        <td>{{ post.product }}</td>
+        <td>{{ post.quantity }}</td> <!-- New Quantity column -->
+      </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
-
-
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -60,7 +49,5 @@
   <script src="js/clean-blog.min.js"></script>
 
 </body>
-
 </html>
 {% endblock %}
-  

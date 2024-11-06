@@ -33,13 +33,14 @@ class Posts(db.Model):
     address = db.Column(db.String(120), nullable=False)
 
 class Addmp(db.Model):
-    sno = db.Column(db.Integer,  primary_key=True)
+    sno = db.Column(db.Integer, primary_key=True)
     medicine = db.Column(db.String, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
 
 class Addpd(db.Model):
-    sno = db.Column(db.Integer,  primary_key=True)
+    sno = db.Column(db.Integer, primary_key=True)
     product = db.Column(db.String, nullable=False)
-
+    quantity = db.Column(db.Integer, nullable=False)
 
 class Logs(db.Model):
 
@@ -110,38 +111,49 @@ def insert():
     return render_template('insert.html',params=params)
 
 
-@app.route("/addmp", methods = ['GET','POST'])
+@app.route("/addmp", methods=['GET', 'POST'])
 def addmp():
-
-
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         '''ADD ENTRY TO THE DATABASE'''
-
         newmedicine = request.form.get('medicine')
+        quantity = request.form.get('quantity', type=int)  # Get the quantity from the form
 
-        push=Addmp(medicine=newmedicine,)
-        db.session.add(push)
+        existing_medicine = Addmp.query.filter_by(medicine=newmedicine).first()
+
+        if existing_medicine:
+            # Increment the quantity if the medicine already exists
+            existing_medicine.quantity += quantity
+            flash(f"Updated quantity for {newmedicine}.", "primary")
+        else:
+            # Create a new entry
+            push = Addmp(medicine=newmedicine, quantity=quantity)
+            db.session.add(push)
+            flash(f"Added new medicine: {newmedicine}.", "primary")
+
         db.session.commit()
-        flash("Thanks for adding new items", "primary")
     return render_template('search.html', params=params)
 
-@app.route("/addpd", methods = ['GET','POST'])
-
-
+@app.route("/addpd", methods=['GET', 'POST'])
 def addpd():
-
-
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         '''ADD ENTRY TO THE DATABASE'''
-
         newproduct = request.form.get('product')
+        quantity = request.form.get('quantity', type=int)  # Get the quantity from the form
 
-        push=Addpd(product=newproduct,)
-        db.session.add(push)
+        existing_product = Addpd.query.filter_by(product=newproduct).first()
+
+        if existing_product:
+            # Increment the quantity if the product already exists
+            existing_product.quantity += quantity
+            flash(f"Updated quantity for {newproduct}.", "primary")
+        else:
+            # Create a new entry
+            push = Addpd(product=newproduct, quantity=quantity)
+            db.session.add(push)
+            flash(f"Added new product: {newproduct}.", "primary")
+
         db.session.commit()
-        flash("Thanks for adding new items", "primary")
     return render_template('search.html', params=params)
-
 
 @app.route("/list",methods=['GET','POST'])
 def post():
@@ -273,8 +285,8 @@ def medicine():
         '''ADD ENTRY TO THE DATABASE'''
         mid=request.form.get('mid')
         name=request.form.get('name')
-        medicines=request.form.get('medicines')
-        products=request.form.get('products')
+        medicines = Addmp.query.all()
+        products = Addpd.query.all()
         email=request.form.get('email')
         amount=request.form.get('amount')
 
@@ -295,6 +307,7 @@ def medicine():
 
 
     return render_template('medicine.html',params=params)
+
 
 
 app.run(debug=True)
