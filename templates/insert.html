@@ -2,7 +2,7 @@
 {% block body %}
 
 <!-- Page Header -->
-<header class="masthead mb-0" style="background-image: url('{{ url_for('static', filename='img/home-bg.jpg') }}');">
+<header class="masthead mb-0">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
@@ -61,14 +61,14 @@
                 <div class="form-group">
                     <label for="phone_no">Phone Number</label>
                     <input type="tel" name="phone_no" class="form-control" placeholder="Enter phone number" id="phone_no" required
-                           pattern="^([789]\d{9})$" data-validation-required-message="Please enter a valid 10-digit phone number starting with 7, 8, or 9.">
-                    <small class="text-danger validation-message" style="display: none;">Please enter a valid 10-digit phone number starting with 7, 8, or 9.</small>
+                           pattern="^([6789]\d{9})$" data-validation-required-message="Please enter a valid 10-digit phone number starting with 6 7, 8, or 9.">
+                    <small class="text-danger validation-message" style="display: none;">Please enter a valid 10-digit phone number starting with 6 7, 8, or 9.</small>
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" name="address" class="form-control" placeholder="Enter address" id="address" required data-validation-required-message="Please enter the address.">
+                    <input type="text" name="address" class="form-control" placeholder="Enter address" id="address" required data-validation-required-message="Please enter the address." style="width: 450px; height: 50px;">
                     <p class="help-block text-danger"></p>
                 </div>
             </div>

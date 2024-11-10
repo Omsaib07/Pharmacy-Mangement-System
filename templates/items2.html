@@ -2,52 +2,51 @@
 {% block body %}
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{url_for('static', filename='img/bg1.jpg')}}')">
+  <header class="masthead" style="background: linear-gradient(135deg, #2a3d66, #4f6d7a); background-size: cover; background-attachment: fixed;">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>Available Medicines and Products</h1>
-            <span class="subheading">ITEM LISTS AVAILABLE IN OUR PHARMACY</span>
+            <h1 class="text-white">Available Products</h1>
+            <span class="subheading text-white">PRODUCTS LISTS AVAILABLE IN OUR PHARMACY</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <p>Available items in our pharmacy</p>            
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th>Sno</th>
-        <th>Product</th>
-        <th>Quantity</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for post in posts %} 
-      <tr>
-        <td>{{ post.sno }}</td>
-        <td>{{ post.product }}</td>
-        <td>{{ post.quantity }}</td> <!-- New Quantity column -->
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+  <!-- Main Content -->
+  <div class="container mt-5">
+    <p class="lead text-center text-muted">Available products in our pharmacy.</p>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Sno</th>
+          <th>Product</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>{{ post.sno }}</td>
+          <td>{{ post.product }}</td>
+          <td>{{ post.quantity }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Contact Form JavaScript -->
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script>
-
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
 
 </body>
+
 </html>
 {% endblock %}

@@ -60,7 +60,7 @@ def hello():
 
 @app.route("/")
 def home():
-    return redirect(url_for('login'))
+    return redirect(url_for('dashboard.html'))
 
 @app.route("/search",methods=['GET','POST'])
 def search():
@@ -250,7 +250,7 @@ def edit(mid):
                 post.phone_no=phone_no
                 post.address=address
                 db.session.commit()
-                flash("data updated ", "success")
+                flash("Data Updated Succesfully ", "success")
 
                 return redirect('/edit/'+mid)
         post = Posts.query.filter_by(mid=mid).first()

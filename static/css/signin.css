@@ -21,150 +21,143 @@
 html,
 body {
   height: 100%;
-  font-family: Arial, sans-serif;
-}
-
-html, body {
-  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background-image: url("/static/img/loginpage_files/LoginBg.jpg"); /* Your image path */
-  background-size: cover; /* Ensures the image covers the entire background */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevents image repetition */
-  background-attachment: fixed; /* Keeps the background in place when scrolling */
-  margin: 0; /* Ensures no default margin on the body */
+  align-items: center;
+  background: linear-gradient(135deg, #4f6d7a, #556f77); /* Elegant gradient background */
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff; /* Light text for contrast */
 }
 
 .form-signin {
   width: 100%;
-  max-width: 350px;
-  padding: 20px 25px;
-  margin: auto;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 380px;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+  border-radius: 12px;
+  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.15);
   text-align: center;
-  animation: fadeIn 1.5s ease-in-out;
+  animation: fadeIn 1.2s ease-out;
 }
 
 .form-signin .form-control {
   width: 100%;
-  height: auto;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-  animation: fadeIn 1.7s ease-in-out;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  background-color: #f8f8f8;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1.4s ease-out;
 }
 
 .form-signin .form-control:focus {
-  z-index: 2;
   border-color: #007bff;
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.2);
   outline: none;
 }
 
 .form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 6px 6px 0 0;
 }
 
 .form-signin input[type="password"] {
-  margin-bottom: 15px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-radius: 0 0 6px 6px;
 }
 
 .form-signin button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   animation: buttonPulse 2s infinite ease-in-out;
 }
 
 .form-signin button:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 .form-signin h1 {
-  font-size: 24px;
+  font-size: 28px;
   color: #333;
-  margin-bottom: 20px;
-  animation: fadeIn 1.3s ease-in-out;
+  margin-bottom: 24px;
+  animation: fadeIn 1s ease-out;
 }
 
 .form-signin p {
   font-size: 14px;
   color: #777;
-  animation: fadeIn 1.6s ease-in-out;
+  margin-top: 12px;
+  animation: fadeIn 1.5s ease-out;
 }
+
 .alert {
-  max-width: 400px;
+  max-width: 420px;
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-}
-
-/* Centering and styling enhancements */
-
-
-.form-signin {
-  width: 100%;
-  max-width: 360px;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-in-out;
+  background-color: #ff3b30;
+  color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: none;
 }
 
 .form-signin img {
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 1.3s ease-out;
 }
 
-.form-signin input.form-control {
-  margin-bottom: 15px;
-  border-radius: 5px;
-  transition: border-color 0.3s;
-}
-
+/* Adding a subtle gradient effect on form focus */
 .form-signin input.form-control:focus {
-  border-color: #007bff;
+  background-color: #e0f7fa;
 }
 
-.form-signin button {
-  background: #007bff;
-  border: none;
-  transition: background 0.3s ease;
-  font-weight: bold;
-  border-radius: 5px;
+/* Gradient background animation */
+@keyframes gradientAnimation {
+  0% {
+    background: linear-gradient(135deg, #4f6d7a, #556f77);
+  }
+  50% {
+    background: linear-gradient(135deg, #6f8f9e, #8c9fa8);
+  }
+  100% {
+    background: linear-gradient(135deg, #4f6d7a, #556f77);
+  }
 }
 
-.form-signin button:hover {
-  background: #0056b3;
+body {
+  animation: gradientAnimation 5s ease-in-out infinite;
 }
 
-.badge-dark {
-  background-color: #333;
-}
-
-/* Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Responsive Design */
+@media (max-width: 480px) {
+  .form-signin {
+    width: 90%;
+    padding: 20px;
+  }
+  .form-signin h1 {
+    font-size: 24px;
+  }
+  .form-signin button {
+    font-size: 16px;
+  }
 }

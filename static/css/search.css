@@ -1,63 +1,92 @@
-/* search_record.css */
-
 /* Masthead styling */
 .masthead {
-    height: 50vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    color: #f8f9fa;
-    margin-bottom: 0;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .page-heading h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #ffffff;
-  }
-  
-  .page-heading .subheading {
-    font-size: 1.1rem;
-    color: #dddddd;
-  }
-  
-  /* Alert styling */
-  .alert-dismissible .close {
-    color: #ffffff;
-  }
-  
-  /* Button styling */
-  .btn-warning,
-  .btn-outline-success {
-    margin: 0.5rem;
-  }
-  
-  .form-inline .form-control {
-    margin-right: 0.5rem;
-  }
-  
-  /* Badge styling */
-  h2 span.badge {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #343a40;
-    background-color: #f1f1f1;
-    padding: 0.5rem 1rem;
-  }
-  
-  /* Form field styling */
-  .form-row .form-control {
-    border: 1px solid #ced4da;
-    padding: 0.75rem;
-    font-size: 1rem;
-  }
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  color: #f8f9fa;
+  margin-bottom: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.page-heading h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.page-heading .subheading {
+  font-size: 1.1rem;
+  color: #dddddd;
+}
+
+/* Alert styling */
+.alert-dismissible .close {
+  color: #ffffff;
+}
+
+/* Button styling with updated colors */
+.btn-warning {
+  background: linear-gradient(to right, #f39c12, #e67e22); /* Updated gradient */
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background: #e67e22;
+  box-shadow: 0 5px 10px rgba(230, 126, 34, 0.3);
+}
+
+.btn-outline-success {
+  background: transparent;
+  border: 2px solid #1abc9c; /* Updated border color */
+  color: #1abc9c;
+  margin: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+  background: #1abc9c;
+  color: white;
+  box-shadow: 0 5px 10px rgba(26, 188, 156, 0.3);
+}
+
+/* Form styling */
+.form-inline .form-control {
+  margin-right: 0.5rem;
+  border: 1px solid #ced4da;
+  padding: 0.75rem;
+}
+
+/* Badge styling */
+h2 span.badge {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #343a40;
+  background-color: #ecf0f1; /* Updated light gray background */
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+/* Form field styling */
+.form-row .form-control {
+  border: 1px solid #ced4da;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-row .form-control:focus {
+  border-color: #3498db; /* Updated focus border color */
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
