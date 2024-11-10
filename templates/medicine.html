@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block body %}
-
   <!-- Page Header -->
   <header class="masthead mb-0" style="background-image: url('{{ url_for('static', filename='img/gmail.jpg') }}');">
     <div class="overlay"></div>
@@ -36,113 +35,175 @@
     {% endif %}
   {% endwith %}
 
-  <!-- Main Content -->
-  <div class="container my-5">
+   <!-- Main Content -->
+   <div class="container my-5">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
-
         <form name="sentMessage" id="contactForm" action="/medicines" method="post" novalidate>
-
           <!-- Medical ID -->
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label for="mid">Medical ID</label>
-              <input type="number" name="mid" class="form-control" placeholder="Enter Medical ID" id="mid" required>
-              <small class="text-danger validation-message" style="display: none;">Please enter the medical ID.</small>
+              <input type="text" name="mid" class="form-control" placeholder="Enter Medical ID" id="mid" required>
             </div>
           </div>
-        
+
           <!-- Name -->
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label for="name">Name</label>
               <input type="text" name="name" class="form-control" placeholder="Enter name" id="name" required>
-              <small class="text-danger validation-message" style="display: none;">Please enter the name.</small>
             </div>
           </div>
-        
+
           <!-- Email -->
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label for="email">Email ID</label>
-              <input type="email" name="email" class="form-control" placeholder="Enter your email ID" id="email" required
-                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
-              <small class="text-danger validation-message" style="display: none;">Please enter a valid email ID.</small>
+              <input type="email" name="email" class="form-control" placeholder="Enter your email ID" id="email" required>
             </div>
           </div>
-        
-          <!-- Medicines Dropdown -->
-<div class="control-group">
-  <div class="form-group floating-label-form-group controls">
-      <label for="medicines">Select Medicines</label>
-      <select name="medicines" class="form-control" id="medicines" required>
-          <option value="">-- Select Medicine --</option>
-          {% for medicine in medicines %}
-              <option value="{{ medicine.sno }}">{{ medicine.medicine }}</option>  <!-- Use 'medicine' directly -->
-          {% endfor %}
-      </select>
-      <small class="text-danger validation-message" style="display: none;">Please select a medicine.</small>
-  </div>
-</div>
 
-<!-- Products Dropdown -->
-<div class="control-group">
-  <div class="form-group floating-label-form-group controls">
-      <label for="products">Select Products</label>
-      <select name="products" class="form-control" id="products" required>
-          <option value="">-- Select Product --</option>
-          {% for product in products %}
-              <option value="{{ product.sno }}">{{ product.product }}</option>  <!-- Use 'product' directly -->
-          {% endfor %}
-      </select>
-      <small class="text-danger validation-message" style="display: none;">Please select a product.</small>
-  </div>
-</div>
-
-          <!-- Amount (Must Be Greater Than 0) -->
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label for="amount">Amount</label>
-              <input type="number" name="amount" class="form-control" placeholder="Enter amount" id="amount" required min="1">
-              <small class="text-danger validation-message" style="display: none;">Please enter an amount greater than 0.</small>
+          <!-- Medicines Dropdown and Quantity -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                  <label for="medicines">Select Medicine</label>
+                  <select name="medicines" class="form-control" id="medicines" required>
+                    <option value="">-- Select Medicine --</option>
+                    {% for medicine in medicines %}
+                      <option value="{{ medicine.sno }}" data-quantity="{{ medicine.quantity }}">
+                        {{ medicine.medicine }} (Available: {{ medicine.quantity }})
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                  <label for="medicine_quantity">Medicine Quantity</label>
+                  <input type="number" name="medicine_quantity" class="form-control" 
+                         placeholder="Enter quantity" id="medicine_quantity" required min="1">
+                  <small class="text-danger" id="medicine-error"></small>
+                </div>
+              </div>
             </div>
           </div>
-        
-          <!-- Submit Button -->
-          <div class="form-group text-center">
-            <button onclick="return confirm('Are you sure you want to save this data?');" type="submit" class="btn btn-primary btn-lg px-5" id="sendMessageButton">Send</button>
+
+          <!-- Products Dropdown and Quantity -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                  <label for="products">Select Product</label>
+                  <select name="products" class="form-control" id="products" required>
+                    <option value="">-- Select Product --</option>
+                    {% for product in products %}
+                      <option value="{{ product.sno }}" data-quantity="{{ product.quantity }}">
+                        {{ product.product }} (Available: {{ product.quantity }})
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                  <label for="product_quantity">Product Quantity</label>
+                  <input type="number" name="product_quantity" class="form-control" 
+                         placeholder="Enter quantity" id="product_quantity" required min="1">
+                  <small class="text-danger" id="product-error"></small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      
+          <div class="form-group text-center mt-4">
+              <button type="submit" class="btn btn-primary btn-lg px-5" id="sendMessageButton">Submit Order</button>
           </div>
         </form>
-        
-        <script>
-          document.getElementById('contactForm').addEventListener('submit', function(event) {
-            let isValid = true;
-            const fields = this.querySelectorAll('input[required], textarea[required]');
-        
-            fields.forEach(field => {
-              const errorMessage = field.nextElementSibling;
-              if (!field.checkValidity()) {
-                isValid = false;
-                errorMessage.style.display = 'block'; // Show the error message
-              } else {
-                errorMessage.style.display = 'none'; // Hide the error message
-              }
-              
-              // Additional check for the Amount field
-              if (field.id === "amount" && field.value <= 0) {
-                isValid = false;
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = "Please enter an amount greater than 0.";
-              }
-            });
-        
-            if (!isValid) {
-              event.preventDefault(); // Prevent form submission if there are invalid fields
-              alert("Please fill out all required fields correctly.");
-            }
-          });
-        </script>
+      </div>
+    </div>
+
+    <!-- Inventory Display Section -->
+    <div class="row mt-5">
+      <!-- Medicines Inventory -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Available Medicines</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Medicine Name</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for medicine in all_medicines %}
+                  <tr>
+                    <td>{{ medicine.medicine }}</td>
+                    <td>{{ medicine.quantity }}</td>
+                    <td>
+                      {% if medicine.quantity > 0 %}
+                        <span class="badge badge-success">In Stock</span>
+                      {% else %}
+                        <span class="badge badge-danger">Out of Stock</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Inventory -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Available Products</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for product in all_products %}
+                  <tr>
+                    <td>{{ product.product }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                      {% if product.quantity > 0 %}
+                        <span class="badge badge-success">In Stock</span>
+                      {% else %}
+                        <span class="badge badge-danger">Out of Stock</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -153,11 +214,97 @@
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-  <!-- Form Validation Scripts -->
-  <script src="{{ url_for('static', filename='js/jqBootstrapValidation.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/contact_me.js') }}"></script>
+  <!-- Custom Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const medicineSelect = document.getElementById('medicines');
+    const productSelect = document.getElementById('products');
+    const medicineQuantity = document.getElementById('medicine_quantity');
+    const productQuantity = document.getElementById('product_quantity');
+    const medicineError = document.getElementById('medicine-error');
+    const productError = document.getElementById('product-error');
+    const form = document.getElementById('contactForm');
 
-  <!-- Custom Scripts for this Template -->
-  <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
+    // Function to validate quantity
+    function validateQuantity(select, quantityInput, errorElement) {
+        // If nothing is selected, consider it valid (optional)
+        if (!select.value) {
+            if (!quantityInput.value) {
+                return true;
+            }
+            errorElement.textContent = "Please select an item first";
+            return false;
+        }
 
+        // If item is selected, quantity is required
+        if (!quantityInput.value) {
+            errorElement.textContent = "Please enter quantity";
+            return false;
+        }
+
+        const selectedOption = select.options[select.selectedIndex];
+        const availableQuantity = parseInt(selectedOption.dataset.quantity);
+        const requestedQuantity = parseInt(quantityInput.value);
+
+        if (isNaN(requestedQuantity) || requestedQuantity <= 0) {
+            errorElement.textContent = "Please enter a valid quantity";
+            return false;
+        }
+
+        if (requestedQuantity > availableQuantity) {
+            errorElement.textContent = `Maximum available quantity is ${availableQuantity}`;
+            return false;
+        }
+
+        errorElement.textContent = "";
+        return true;
+    }
+
+    // Add event listeners for quantity validation
+    medicineQuantity.addEventListener('input', () => {
+        validateQuantity(medicineSelect, medicineQuantity, medicineError);
+    });
+
+    productQuantity.addEventListener('input', () => {
+        validateQuantity(productSelect, productQuantity, productError);
+    });
+
+    medicineSelect.addEventListener('change', () => {
+        if (!medicineSelect.value) {
+            medicineQuantity.value = '';
+        }
+        validateQuantity(medicineSelect, medicineQuantity, medicineError);
+    });
+
+    productSelect.addEventListener('change', () => {
+        if (!productSelect.value) {
+            productQuantity.value = '';
+        }
+        validateQuantity(productSelect, productQuantity, productError);
+    });
+
+    // Form submission handling
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const isMedicineValid = validateQuantity(medicineSelect, medicineQuantity, medicineError);
+        const isProductValid = validateQuantity(productSelect, productQuantity, productError);
+
+        // Check if at least one item is selected and valid
+        const hasMedicine = medicineSelect.value && medicineQuantity.value;
+        const hasProduct = productSelect.value && productQuantity.value;
+
+        if (!hasMedicine && !hasProduct) {
+            flash("Please select at least one medicine or product to order.", "danger");
+            return;
+        }
+
+        if (isMedicineValid && isProductValid) {
+            if (confirm('Are you sure you want to place this order?')) {
+                this.submit();
+            }
+        }
+    });
+});
+  </script>
 {% endblock %}

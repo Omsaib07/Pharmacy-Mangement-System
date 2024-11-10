@@ -42,6 +42,8 @@
             <form method="POST" action="/search">
                 <input type="text" name="search" class="form-control" placeholder="Search by Medicine or Product">
                 <button type="submit" class="btn btn-outline-primary" type="button">Search</button>
+
+                
             </form>
             
             <!-- Orders Table -->
@@ -66,7 +68,11 @@
                                 <td>{{ post.product_quantity }}</td> <!-- Display product_quantity -->
                                 <td>{{ post.medicine_quantity }}</td> <!-- Display medicine_quantity -->
                                 <td class="text-center">
-                                    <a href="/deletemp/{{ post.id }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this order?');">Delete</a>
+                                    <a href="{{ url_for('delete_order', id=post.id) }}" 
+                                       class="btn btn-outline-danger btn-sm" 
+                                       onclick="return confirm('Are you sure you want to delete this order? This will restore the quantities to inventory.');">
+                                        Delete
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}

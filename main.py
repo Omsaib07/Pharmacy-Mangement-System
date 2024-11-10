@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import json
-
+from flask import Flask, render_template, request, session, redirect, flash, url_for
 # Load configuration parameters
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
@@ -20,10 +20,12 @@ class Medicines(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(500), nullable=False)
-    medicines= db.Column(db.String(500), nullable=False)
+    medicines = db.Column(db.String(500), nullable=False)
     products = db.Column(db.String(500), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     mid = db.Column(db.String(120), nullable=False)
+    medicine_quantity = db.Column(db.Integer, default=0)  # New column
+    product_quantity = db.Column(db.Integer, default=0)   # New column
 
 class Posts(db.Model):
     mid = db.Column(db.Integer, primary_key=True)
@@ -268,46 +270,187 @@ def delete(mid):
 
     return redirect('/login')
 
-@app.route("/deletemp/<string:id>", methods=['GET', 'POST'])
-def deletemp(id):
-    if ('user' in session and session['user']==params['user']):
-        post=Medicines.query.filter_by(id=id).first()
-        db.session.delete(post)
-        db.session.commit()
-        flash("Deleted Successfully", "primary")
+# Add this route to your Flask application
+@app.route("/deletemp/<int:id>", methods=['GET', 'POST'])
+def delete_order(id):
+    try:
+        if ('user' in session and session['user'] == params['user']):
+            # Find the order to be deleted
+            order = Medicines.query.filter_by(id=id).first()
+            
+            if order:
+                # Restore quantities to inventory before deleting the order
+                if order.medicine_quantity > 0 and order.medicines != "No medicine ordered":
+                    medicine = Addmp.query.filter_by(medicine=order.medicines).first()
+                    if medicine:
+                        medicine.quantity += order.medicine_quantity
+                
+                if order.product_quantity > 0 and order.products != "No product ordered":
+                    product = Addpd.query.filter_by(product=order.products).first()
+                    if product:
+                        product.quantity += order.product_quantity
+                
+                # Create log entry for the deletion
+                log_entry = Logs(
+                    mid=order.mid,
+                    action=f"Deleted order - Medicine: {order.medicines} (Qty: {order.medicine_quantity}), "
+                          f"Product: {order.products} (Qty: {order.product_quantity})",
+                    date=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                )
+                
+                # Add log entry and delete order
+                db.session.add(log_entry)
+                db.session.delete(order)
+                db.session.commit()
+                
+                flash("Order deleted successfully and inventory restored", "success")
+            else:
+                flash("Order not found", "danger")
+                
+        else:
+            flash("Please login to delete orders", "danger")
+            return redirect(url_for('login'))
+            
+    except Exception as e:
+        print(f"Error deleting order: {str(e)}")  # For debugging
+        db.session.rollback()
+        flash("Error occurred while deleting the order", "danger")
+    
+    return redirect(url_for('sp'))  # Redirect to the orders page
+from datetime import datetime
+from flask import Flask, render_template, request, session, redirect, flash, url_for
 
-    return redirect('/list')
-
-
-@app.route("/medicines", methods = ['GET','POST'])
+@app.route("/medicines", methods=['GET', 'POST'])
 def medicine():
-    if(request.method=='POST'):
-        '''ADD ENTRY TO THE DATABASE'''
-        mid=request.form.get('mid')
-        name=request.form.get('name')
-        medicines = Addmp.query.all()
-        products = Addpd.query.all()
-        email=request.form.get('email')
-        amount=request.form.get('amount')
+    if request.method == 'POST':
+        # Retrieve form data
+        form_data = {
+            'mid': request.form.get('mid'),
+            'name': request.form.get('name'),
+            'selected_medicine': request.form.get('medicines'),
+            'selected_product': request.form.get('products'),
+            'medicine_quantity': request.form.get('medicine_quantity', '0'),
+            'product_quantity': request.form.get('product_quantity', '0'),
+            'email': request.form.get('email')
+        }
 
         try:
-            # Convert amount to an integer
-            amount = int(amount)
-            entry = Medicines(mid=mid, name=name, medicines=medicines, products=products, email=email, amount=amount)
-            db.session.add(entry)
+            # Basic validation for required fields
+            if not all([form_data['mid'], form_data['name'], form_data['email']]):
+                flash("Please fill in all required fields (ID, Name, and Email).", "danger")
+                return redirect(url_for('medicine'))
+
+            # Initialize variables
+            medicine = None
+            product = None
+            medicine_quantity = 0
+            product_quantity = 0
+            total_amount = 0
+
+            # Process medicine order if selected
+            if form_data['selected_medicine'] and form_data['medicine_quantity']:
+                try:
+                    medicine_quantity = int(form_data['medicine_quantity'])
+                    if medicine_quantity <= 0:
+                        flash("Medicine quantity must be greater than 0.", "danger")
+                        return redirect(url_for('medicine'))
+                    
+                    medicine = Addmp.query.filter_by(sno=form_data['selected_medicine']).first()
+                    if not medicine:
+                        flash("Selected medicine not found.", "danger")
+                        return redirect(url_for('medicine'))
+                    
+                    if medicine.quantity < medicine_quantity:
+                        flash(f"Insufficient medicine stock. Available: {medicine.quantity}", "danger")
+                        return redirect(url_for('medicine'))
+                except ValueError:
+                    flash("Please enter a valid medicine quantity.", "danger")
+                    return redirect(url_for('medicine'))
+
+            # Process product order if selected
+            if form_data['selected_product'] and form_data['product_quantity']:
+                try:
+                    product_quantity = int(form_data['product_quantity'])
+                    if product_quantity <= 0:
+                        flash("Product quantity must be greater than 0.", "danger")
+                        return redirect(url_for('medicine'))
+                    
+                    product = Addpd.query.filter_by(sno=form_data['selected_product']).first()
+                    if not product:
+                        flash("Selected product not found.", "danger")
+                        return redirect(url_for('medicine'))
+                    
+                    if product.quantity < product_quantity:
+                        flash(f"Insufficient product stock. Available: {product.quantity}", "danger")
+                        return redirect(url_for('medicine'))
+                except ValueError:
+                    flash("Please enter a valid product quantity.", "danger")
+                    return redirect(url_for('medicine'))
+
+            # Verify at least one item is being ordered
+            if not medicine and not product:
+                flash("Please select at least one medicine or product to order.", "danger")
+                return redirect(url_for('medicine'))
+
+            # Calculate amount (You can modify this calculation based on your pricing logic)
+            if medicine:
+                total_amount += medicine_quantity  # Add your pricing logic here
+            if product:
+                total_amount += product_quantity  # Add your pricing logic here
+
+            # Create order entry with explicit quantities
+            new_order = Medicines(
+                mid=form_data['mid'],
+                name=form_data['name'],
+                medicines=medicine.medicine if medicine else "No medicine ordered",
+                products=product.product if product else "No product ordered",
+                email=form_data['email'],
+                amount=total_amount,
+                medicine_quantity=medicine_quantity if medicine else 0,
+                product_quantity=product_quantity if product else 0
+            )
+
+            # Update inventory
+            if medicine and medicine_quantity > 0:
+                medicine.quantity -= medicine_quantity
+                
+            if product and product_quantity > 0:
+                product.quantity -= product_quantity
+
+            # Create log entry with quantity information
+            log_entry = Logs(
+                mid=form_data['mid'],
+                action=f"Ordered medicine: {medicine.medicine if medicine else 'None'} (Qty: {medicine_quantity if medicine else 0}), "
+                      f"product: {product.product if product else 'None'} (Qty: {product_quantity if product else 0})",
+                date=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            )
+
+            # Save all changes
+            db.session.add(new_order)
+            db.session.add(log_entry)
             db.session.commit()
-            flash("Data Added Successfully", "primary")
+
+            flash("Order placed successfully", "success")
+            return redirect(url_for('medicine'))
+
         except Exception as e:
-            # Check if it's the specific error for the negative amount
-            if "Negative values cannot be inserted into the quantity column." in str(e):
-                flash("Error: Negative values cannot be inserted into the mid", "danger")
-            else:
-                flash("An unexpected error occurred. Please try again.", "danger")
+            print(f"Error: {str(e)}")  # For debugging
+            flash("An unexpected error occurred. Please try again.", "danger")
             db.session.rollback()
+            return redirect(url_for('medicine'))
 
+    # GET request handling
+    medicines = Addmp.query.filter(Addmp.quantity > 0).all()
+    products = Addpd.query.filter(Addpd.quantity > 0).all()
+    all_medicines = Addmp.query.all()
+    all_products = Addpd.query.all()
 
-    return render_template('medicine.html',params=params)
-
-
-
+    return render_template(
+        'medicine.html',
+        params=params,
+        medicines=medicines,
+        products=products,
+        all_medicines=all_medicines,
+        all_products=all_products
+    )
 app.run(debug=True)

@@ -254,6 +254,12 @@ BEGIN
 END //
 
 DELIMITER ;
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,   -- Primary key for unique identification
+    username VARCHAR(255) NOT NULL UNIQUE, -- Username column, unique for each user
+    password VARCHAR(255) NOT NULL,       -- Password column, storing password
+    role ENUM('admin', 'user') DEFAULT 'user' -- Role column, either 'admin' or 'user', default is 'user'
+);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
