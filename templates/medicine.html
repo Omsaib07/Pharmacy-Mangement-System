@@ -52,7 +52,7 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label for="name">Name</label>
-              <input type="text" name="name" class="form-control" placeholder="Enter name" id="name" required>
+              <input type="text" name="name" class="form-control" placeholder="Enter Medical Name" id="name" required>
             </div>
           </div>
 
@@ -304,6 +304,42 @@
                 this.submit();
             }
         }
+    });
+});
+// Add this to your existing script section
+document.addEventListener('DOMContentLoaded', function() {
+    const midInput = document.getElementById('mid');
+    const nameInput = document.getElementById('name');
+    const form = document.getElementById('contactForm');
+    let timeoutId;
+
+    midInput.addEventListener('input', function() {
+        const mid = this.value.trim();
+        clearTimeout(timeoutId);
+
+        // Add a small delay to prevent too many requests
+        timeoutId = setTimeout(() => {
+            if (mid) {
+                // Make an AJAX request to verify the MID
+                fetch(`/verify_mid/${mid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            midInput.classList.remove('is-invalid');
+                            midInput.classList.add('is-valid');
+                            if (data.name) {
+                                nameInput.value = data.name;
+                                nameInput.disabled = true;
+                            }
+                        } else {
+                            midInput.classList.remove('is-valid');
+                            midInput.classList.add('is-invalid');
+                            nameInput.value = '';
+                            nameInput.disabled = false;
+                        }
+                    });
+            }
+        }, 300);
     });
 });
   </script>

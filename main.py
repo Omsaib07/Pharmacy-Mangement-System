@@ -319,7 +319,15 @@ def delete_order(id):
     return redirect(url_for('sp'))  # Redirect to the orders page
 from datetime import datetime
 from flask import Flask, render_template, request, session, redirect, flash, url_for
-
+@app.route("/verify_mid/<mid>")
+def verify_mid(mid):
+    medical = Posts.query.filter_by(mid=mid).first()
+    if medical:
+        return jsonify({
+            'exists': True,
+            'name': medical.medical_name
+        })
+    return jsonify({'exists': False})
 @app.route("/medicines", methods=['GET', 'POST'])
 def medicine():
     if request.method == 'POST':
@@ -335,9 +343,20 @@ def medicine():
         }
 
         try:
+            # Check if the medical ID exists in the Posts table
+            medical = Posts.query.filter_by(mid=form_data['mid']).first()
+            if not medical:
+                flash("Invalid Medical ID. Please register your medical store first.", "danger")
+                return redirect(url_for('medicine'))
+
             # Basic validation for required fields
             if not all([form_data['mid'], form_data['name'], form_data['email']]):
                 flash("Please fill in all required fields (ID, Name, and Email).", "danger")
+                return redirect(url_for('medicine'))
+
+            # Verify the name matches the registered medical store
+            if medical.medical_name.lower() != form_data['name'].lower():
+                flash("Medical store name does not match the registered name for this ID.", "danger")
                 return redirect(url_for('medicine'))
 
             # Initialize variables
