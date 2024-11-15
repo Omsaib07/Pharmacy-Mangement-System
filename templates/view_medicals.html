@@ -1,0 +1,65 @@
+{% extends "user_layout.html" %}
+{% block body %}
+<header class="masthead mb-0">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Available Medical Stores</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="container mt-4">
+    
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% if medical_stores %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Medical ID</th>
+                    <th>Medical Store Name</th>
+                    <th>Location</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                {% for store in medical_stores %}
+                <tr>
+                    <td>{{ store.mid }}</td>
+                    <td>{{ store.medical_name }}</td>
+                    <td>{{ store.address }}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        No medical stores are currently registered in the system.
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{{ url_for('user_medicines') }}" class="btn btn-primary">
+            <i class="fas fa-shopping-cart"></i> Order Medicines
+        </a>
+    </div>
+</div>
+
+{% endblock %}

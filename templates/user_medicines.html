@@ -1,8 +1,21 @@
-{% extends "layout.html" %}
+{% extends "user_layout.html" %}
 {% block body %}
-
+<header class="masthead mb-0">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Order Medicines and Products</h1>
+            <span class="subheading">Welcome!
+              <br>You are logged in</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 <div class="container mt-5">
-    <h2 class="mb-4">Order Medicines and Products</h2>
+    
     
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -12,7 +25,7 @@
     {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('medicine') }}" method="post">
+    <form action="{{ url_for('user_medicines') }}" method="post">
         <div class="row">
             <!-- Personal Information -->
             <div class="col-md-6 mb-4">
@@ -22,8 +35,9 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="mid" class="form-label">Medical ID</label>
-                            <input type="number" class="form-control" id="mid" name="mid" required>
+                            <label for="mid" class="form-label">Medical Store ID</label>
+                            <input type="text" class="form-control" id="mid" name="mid" required>
+                            <small class="text-muted">Enter the ID of the medical store you want to order from</small>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Medical Name</label>
@@ -196,39 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const productQuantityInput = document.getElementById('product_quantity');
     const medicineMax = document.getElementById('medicine-max');
     const productMax = document.getElementById('product-max');
-    const midInput = document.getElementById('mid');
-    const nameInput = document.getElementById('name');
     
     // Summary elements
     const selectedMedicine = document.getElementById('selectedMedicine');
     const selectedProduct = document.getElementById('selectedProduct');
     const totalItems = document.getElementById('totalItems');
-
-    // MID verification
-    let timeoutId;
-    midInput.addEventListener('input', function() {
-    const mid = this.value.trim();
-    clearTimeout(timeoutId);
-
-    timeoutId = setTimeout(() => {
-        if (mid) {
-            fetch(`/verify_mid/${mid}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        midInput.classList.remove('is-invalid');
-                        midInput.classList.add('is-valid');
-                        // Removed auto-filling of nameInput
-                        nameInput.disabled = false; // Optional: Keep enabled if users should enter it manually
-                    } else {
-                        midInput.classList.remove('is-valid');
-                        midInput.classList.add('is-invalid');
-                        nameInput.disabled = false; // Allow manual entry if the ID is invalid
-                    }
-                });
-        }
-    }, 300);
-});
 
     function updateMaxQuantity(selectElement, quantityInput, maxSpan) {
         const selectedOption = selectElement.options[selectElement.selectedIndex];

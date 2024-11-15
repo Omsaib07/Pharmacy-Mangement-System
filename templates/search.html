@@ -5,90 +5,99 @@
 
 {% block body %}
 
-  <!-- Page Header -->
+  <!-- Header Section -->
   <header class="masthead">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="col-lg-8 col-md-10 mx-auto text-center">
           <div class="page-heading">
-            <h1>Add or Search Items</h1>
+            <h1>Manage Medicines & Products</h1>
+            <span class="subheading">Add new items or search existing records</span>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
   <!-- Flash Messages -->
-  {% with messages = get_flashed_messages(with_categories = true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  
+  <div class="container mt-4">
+    {% with messages = get_flashed_messages(with_categories = true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Content Section -->
   <div class="container my-4">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-dark bg-dark mb-4">
-      <a href="/items">
-        <button class="btn btn-warning">Medicines List</button>
-      </a>
-      <a href="/items2">
-        <button class="btn btn-warning">Products List</button>
-      </a>
-
-      <form class="form-inline ml-auto" action="/search" method="post">
-        <input class="form-control mr-sm-2" id="search" name="search" type="text" placeholder="Search" aria-label="Search" autocomplete="on">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+    <!-- Toolbar for Navigation and Search -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <a href="/items" class="btn btn-outline-secondary mr-2">Medicines List</a>
+        <a href="/items2" class="btn btn-outline-secondary">Products List</a>
+      </div>
+      <form class="form-inline" action="/search" method="post">
+        <input class="form-control mr-2" id="search" name="search" type="text" placeholder="Search items..." aria-label="Search" autocomplete="on">
+        <button class="btn btn-success" type="submit">Search</button>
       </form>
-    </nav>
+    </div>
 
-    <!-- Add New Medicines and Products -->
-    <h2><span class="badge badge-light">Add New Medicines and Products</span></h2>
+    <!-- Add New Items Section -->
+    <div class="bg-light p-4 rounded">
+      <h3 class="text-center mb-4">Add New Medicines and Products</h3>
 
-    <!-- Add Medicines Form -->
-    <form action="/addmp" method="post" class="mb-3">
-      <div class="form-row">
-        <div class="col-md-4 mb-3">
-          <label for="medicine">Medicines</label>
-          <input type="text" class="form-control" name="medicine" id="medicine" placeholder="Add Medicine" autocomplete="on" required>
+      <!-- Add Medicines Form -->
+      <form action="/addmp" method="post" class="mb-3">
+        <div class="form-row align-items-end">
+          <div class="col-md-5">
+            <label for="medicine">Medicine Name</label>
+            <input type="text" class="form-control" name="medicine" id="medicine" placeholder="Enter Medicine" autocomplete="on" required>
+          </div>
+          <div class="col-md-3">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
+          </div>
+          <div class="col-md-4 text-right">
+            <button class="btn btn-primary mt-4" type="submit">Add Medicine</button>
+          </div>
         </div>
-        <div class="col-md-2 mb-3">
-          <label for="quantity">Quantity</label>
-          <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
-        </div>
-      </div>
-      <button class="btn btn-primary" type="submit">Add Medicines</button>
-    </form>
+      </form>
 
-    <!-- Add Products Form -->
-    <form action="/addpd" method="post">
-      <div class="form-row">
-        <div class="col-md-4 mb-3">
-          <label for="product">Products</label>
-          <input type="text" class="form-control" name="product" id="product" placeholder="Add Products" autocomplete="on" required>
+      <!-- Add Products Form -->
+      <form action="/addpd" method="post">
+        <div class="form-row align-items-end">
+          <div class="col-md-5">
+            <label for="product">Product Name</label>
+            <input type="text" class="form-control" name="product" id="product" placeholder="Enter Product" autocomplete="on" required>
+          </div>
+          <div class="col-md-3">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
+          </div>
+          <div class="col-md-4 text-right">
+            <button class="btn btn-primary mt-4" type="submit">Add Product</button>
+          </div>
         </div>
-        <div class="col-md-2 mb-3">
-          <label for="quantity">Quantity</label>
-          <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
-        </div>
-      </div>
-      <button class="btn btn-primary" type="submit">Add Products</button>
-    </form>
+      </form>
+    </div>
 
   </div>
 
-  <!-- Bootstrap core JavaScript -->
+  <!-- Footer Section with Scripts -->
+ 
+
+  <!-- Bootstrap and JavaScript Dependencies -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
 
 {% endblock %}

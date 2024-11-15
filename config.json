@@ -2,11 +2,11 @@
   "params":
   {
    "local_server": "True",
-    "local_uri": "mysql://root:@localhost/Medical",
-    "proud_uri": "mysql://root:@localhost/Medical",
+    "local_uri": "mysql://root:Omsai7%40sql@localhost/Medical",
+    "proud_uri": "mysql://root:Omsai7%40sql@localhost/Medical",
     "gh_url":"https://github.com/Omsaib07",
     "blog_name": "WELCOME",
-    "headname": "MEDICAL SUPPLY MANAGEMENT",
+    "headname": "PHARMACY SYSTEM MANAGEMENT",
     "user": "root",
     "password": "Omsai7@sql",
     "login_image": "logi.jpg",

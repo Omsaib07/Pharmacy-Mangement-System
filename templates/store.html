@@ -6,58 +6,49 @@
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="col-lg-8 col-md-10 mx-auto text-center">
           <div class="page-heading">
-            <h1>Recorded list using stored procedures</h1>
-            <span class="subheading">Have questions? I have answers.</span>
+            <h1>Recorded List Using Stored Procedures</h1>
+            <p class="subheading">Have questions? I have answers.</p>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-   <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th>Mid</th>
-        <th>Medicines</th>
-        <th>Products</th>
-        <th>Amount</th>
-      
-      
-        
+  <!-- Main Content -->
+  <div class="container my-5">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Medical ID (Mid)</th>
+            <th>Medicines</th>
+            <th>Products</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <td>{{ post.mid }}</td>
+            <td>{{ post.medicines }}</td>
+            <td>{{ post.products }}</td>
+            <td>{{ post.amount }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-      </tr>
-    </thead>
-    <tbody>
+  <!-- JavaScript Libraries -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-      {% for post in posts %}
-      <tr>
-        <td>{{post.mid}}</td>
-        <td>{{post.medicines}}</td>
-        <td>{{post.products}}</td>
-        <td>{{post.amount}}</td>
-    
-       </tr>
-       
-      {% endfor %}
-    </tbody>
-  </table>
+  <!-- Custom Scripts -->
+  <script src="{{ url_for('static', filename='js/jqBootstrapValidation.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/contact_me.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
 
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script>
-
-</body>
-
-</html>
 {% endblock %}
-  

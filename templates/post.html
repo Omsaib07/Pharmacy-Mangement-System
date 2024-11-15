@@ -52,9 +52,11 @@
                             <th>Order ID</th>
                             <th>Medicine Name</th>
                             <th>Product Name</th>
-                            <th>Product Quantity</th>
                             <th>Medicine Quantity</th>
+                            <th>Product Quantity</th>
+                            <th>Date</th>
                             <th class="text-center">Actions</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -63,8 +65,9 @@
                                 <td>{{ post.mid }}</td>
                                 <td>{{ post.medicines }}</td>
                                 <td>{{ post.products }}</td>
-                                <td>{{ post.product_quantity }}</td>
                                 <td>{{ post.medicine_quantity }}</td>
+                                <td>{{ post.product_quantity }}</td>
+                                <td>{{ post.date }}</td> 
                                 <td class="text-center">
                                     <a href="{{ url_for('delete_order', id=post.id) }}" 
                                        class="btn btn-outline-danger btn-sm" 

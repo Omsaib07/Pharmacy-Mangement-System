@@ -1,0 +1,103 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+h3 {
+    font-size: 1.75rem;
+    color: #333;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Table Styles */
+.table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #343a40;
+    color: #fff;
+    font-weight: bold;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Button Styles */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Alert Styles */
+.alert {
+    font-size: 1rem;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-dismissible .close {
+    font-size: 1.5rem;
+    color: inherit;
+}
+
+/* Custom Styling for Sections */
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}

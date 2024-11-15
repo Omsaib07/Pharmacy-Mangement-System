@@ -7,6 +7,8 @@
 -- Server version: 8.0.35
 -- PHP Version: 8.2.20
 
+create database Medical;
+use Medical;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -108,8 +110,7 @@ TRUNCATE TABLE `addpd`;
 INSERT DELAYED IGNORE INTO `addpd` (`sno`, `product`, `quantity`) VALUES
 (1, 'colgate', 0),
 (2, 'perfume', 0),
-(3, 'garnier face wash', 0),
-(4, 'garnier face wash', 0);
+
 
 -- --------------------------------------------------------
 
@@ -241,11 +242,113 @@ CREATE TABLE IF NOT EXISTS `Users` (
 -- Truncate table before insert `Users`
 --
 
-ALTER TABLE posts ADD COLUMN user_id INT NOT NULL;
-
--- If you want to set up a foreign key relationship with the `Users` table:
+TRUNCATE TABLE `Users`;COMMIT;
+use medical;
+ALter table logs add column user_id int default NULL;
+ALTER TABLE medicines ADD COLUMN medicine_quantity INT DEFAULT 0;
+ALter table medicines add column user_id int default NULL;
+ALTER TABLE medicines ADD COLUMN product_quantity INT DEFAULT 0;
 ALTER TABLE posts ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES Users(id);
-
+ALTER TABLE logs ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES Users(id);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO medicines (amount, name, medicines, products, email, mid, medicine_quantity, product_quantity, user_id, date, status)
+VALUES (7, 'appolo','dolo650' ,'colgate','hbfa@gmail.com', '1002', 4, 3, 1,'2023-01-24','pending');
+
+ALTER TABLE medicines
+ADD COLUMN date VARCHAR(12) NOT NULL DEFAULT CURRENT_DATE,
+ADD COLUMN status VARCHAR(20) DEFAULT 'pending';
+select * from medicines;
+
+ALTER TABLE medicines
+ADD COLUMN status VARCHAR(20) DEFAULT 'pending';
+ALTER TABLE `posts`
+  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1002;
+COMMIT;
+INSERT INTO Logs VALUES(null, OLD.mid, ' DELETED', NOW());
+
+ALTER TABLE medicines DROP COLUMN sno;
+ALTER TABLE medicines ADD COLUMN id INT PRIMARY KEY AUTO_INCREMENT FIRST;
+
+DROP TABLE IF EXISTS logs;
+DROP TABLE IF EXISTS medicines;
+CREATE TABLE medicines (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mid VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    medicines VARCHAR(100),
+    products VARCHAR(100),
+    medicine_quantity INT DEFAULT 0,
+    product_quantity INT DEFAULT 0,
+    amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    user_id INT NOT NULL,
+    date VARCHAR(12) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+DROP TABLE IF EXISTS logs;
+CREATE TABLE logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mid VARCHAR(100),
+    action VARCHAR(200) NOT NULL,
+    date VARCHAR(100) NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE medicines (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    amount INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    medicines VARCHAR(500) NOT NULL,
+    products VARCHAR(500) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    mid VARCHAR(50) NOT NULL,
+    medicine_quantity INT DEFAULT 0,
+    product_quantity INT DEFAULT 0,
+    user_id INT NOT NULL,
+    date VARCHAR(12) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+DELIMITER //
+
+CREATE TRIGGER `Delete` BEFORE DELETE ON `medicines` 
+FOR EACH ROW 
+BEGIN
+    INSERT INTO Logs (mid, action, date, user_id) 
+    VALUES (OLD.mid, 'DELETED', NOW(), OLD.user_id);
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER `Insert` AFTER INSERT ON `medicines` 
+FOR EACH ROW 
+BEGIN
+    INSERT INTO Logs (mid, action, date, user_id) 
+    VALUES (NEW.mid, 'INSERTED', NOW(), NEW.user_id);
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER `Update` AFTER UPDATE ON `medicines` 
+FOR EACH ROW 
+BEGIN
+    INSERT INTO Logs (mid, action, date, user_id) 
+    VALUES (NEW.mid, 'UPDATED', NOW(), NEW.user_id);
+END//
+
+DELIMITER ;
+CREATE TABLE logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mid VARCHAR(100),
+    action VARCHAR(200) NOT NULL,
+    date VARCHAR(100) NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+

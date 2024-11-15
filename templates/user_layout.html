@@ -19,7 +19,7 @@
 
   <!-- Custom styles for this template -->
   <link href="{{url_for('static',filename='css/clean-blog.min.css')}}" rel="stylesheet">
-  <link href="{{url_for('static',filename='css/styles.css')}}" rel="stylesheet"> <!-- Link to the new CSS file -->
+  <link href="{{url_for('static',filename='css/styles.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -31,24 +31,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto"> 
           <li class="nav-item">
-            <a class="nav-link" href="/insert"><i class="fas fa-plus-circle"></i> Add Medical Information</a>
+            <a class="nav-link" href="/user_medicines"><i class="fas fa-shopping-cart"></i> Order Medicines/Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/dashbord"><i class="fas fa-home"></i>Medical Information</a>
+            <a class="nav-link" href="/view_medicals"><i class="fas fa-pills"></i> View Medicals</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/medicines"><i class="fas fa-pills"></i> Order Medicines/Products</a>
-          </li>
-          <li class="nav-item">
-
-            <a class="nav-link" href="/list"><i class="fas fa-list"></i> View Ordered List</a>
-          </li>
-         
-          <li class="nav-item">
-            <a class="nav-link" href="/details"><i class="fas fa-info-circle"></i> Details</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/search"><i class="fas fa-search"></i> Add/Search Items</a>
+            <a class="nav-link" href="/view_medicines"><i class="fas fa-info-circle"></i> View Products</a>
           </li>
           <li class="nav-item">
             <a onclick="return confirm('Are you sure to logout?');" class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
