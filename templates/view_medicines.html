@@ -44,15 +44,19 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr>
+                            <th>Sno</th>
                             <th>Medicine Name</th>
                             <th>Available Quantity</th>
+                            <th>Price Per Unit</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for medicine in medicines %}
                             <tr>
+                                <td>{{medicine.sno}}</td>
                                 <td>{{ medicine.medicine }}</td>
                                 <td>{{ medicine.quantity }}</td>
+                                <td>{{ medicine.medicine_price}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -76,6 +80,7 @@
                             <th>Sno</th>
                             <th>Product</th>
                             <th>Quantity</th>
+                            <th>Price Per Unit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +89,9 @@
                                 <td>{{ product.sno }}</td>
                                 <td>{{ product.product }}</td>
                                 <td>{{ product.quantity }}</td>
+                                <td>{{ product.product_price }}</td>
                             </tr>
+
                         {% endfor %}
                     </tbody>
                 </table>

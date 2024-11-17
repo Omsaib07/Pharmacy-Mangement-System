@@ -203,32 +203,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedMedicine = document.getElementById('selectedMedicine');
     const selectedProduct = document.getElementById('selectedProduct');
     const totalItems = document.getElementById('totalItems');
+    const totalPriceElement = document.createElement('div'); // Create a new element for total price
+    totalPriceElement.classList.add('d-flex', 'justify-content-between', 'mb-2', 'fw-bold');
+    totalPriceElement.innerHTML = `<span>Total Price:</span><span id="totalPrice">₹0</span>`;
+    document.getElementById('orderSummary').appendChild(totalPriceElement);
 
     // MID verification
     let timeoutId;
     midInput.addEventListener('input', function() {
-    const mid = this.value.trim();
-    clearTimeout(timeoutId);
+        const mid = this.value.trim();
+        clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(() => {
-        if (mid) {
-            fetch(`/verify_mid/${mid}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        midInput.classList.remove('is-invalid');
-                        midInput.classList.add('is-valid');
-                        // Removed auto-filling of nameInput
-                        nameInput.disabled = false; // Optional: Keep enabled if users should enter it manually
-                    } else {
-                        midInput.classList.remove('is-valid');
-                        midInput.classList.add('is-invalid');
-                        nameInput.disabled = false; // Allow manual entry if the ID is invalid
-                    }
-                });
-        }
-    }, 300);
-});
+        timeoutId = setTimeout(() => {
+            if (mid) {
+                fetch(`/verify_mid/${mid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            midInput.classList.remove('is-invalid');
+                            midInput.classList.add('is-valid');
+                            // Removed auto-filling of nameInput
+                            nameInput.disabled = false; // Optional: Keep enabled if users should enter it manually
+                        } else {
+                            midInput.classList.remove('is-valid');
+                            midInput.classList.add('is-invalid');
+                            nameInput.disabled = false; // Allow manual entry if the ID is invalid
+                        }
+                    });
+            }
+        }, 300);
+    });
 
     function updateMaxQuantity(selectElement, quantityInput, maxSpan) {
         const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -249,12 +253,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const productOption = productSelect.options[productSelect.selectedIndex];
         const medicineQty = parseInt(medicineQuantityInput.value) || 0;
         const productQty = parseInt(productQuantityInput.value) || 0;
+        const medicinePrice = parseFloat(medicineOption.dataset.price) || 0;
+        const productPrice = parseFloat(productOption.dataset.price) || 0;
+
+        // Calculate total price
+        const totalPrice = (medicinePrice * medicineQty) + (productPrice * productQty);
 
         selectedMedicine.textContent = medicineOption.value ? 
             `${medicineOption.text.split(' (')[0]} × ${medicineQty}` : '-';
         selectedProduct.textContent = productOption.value ? 
             `${productOption.text.split(' (')[0]} × ${productQty}` : '-';
         totalItems.textContent = medicineQty + productQty;
+        document.getElementById('totalPrice').textContent = `₹${totalPrice.toFixed(2)}`;
     }
 
     // Event listeners
@@ -296,4 +306,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
 {% endblock %}

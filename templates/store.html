@@ -25,7 +25,9 @@
             <th>Medical ID (Mid)</th>
             <th>Medicines</th>
             <th>Products</th>
-            <th>Amount</th>
+            <th>Medicine Quantity</th>
+            <th>Product Quantity</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +36,8 @@
             <td>{{ post.mid }}</td>
             <td>{{ post.medicines }}</td>
             <td>{{ post.products }}</td>
+            <td>{{ post.medicine_quantity }}</td>
+            <td>{{ post.product_quantity }}</td>
             <td>{{ post.amount }}</td>
           </tr>
           {% endfor %}

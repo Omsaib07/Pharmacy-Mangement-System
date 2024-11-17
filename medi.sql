@@ -352,3 +352,20 @@ CREATE TABLE logs (
 );
 
 
+DELIMITER //
+
+CREATE TRIGGER ensure_positive_mid_before_insert 
+BEFORE INSERT ON posts
+FOR EACH ROW
+BEGIN
+    IF NEW.mid <= 0 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Medical ID must be a positive number';
+    END IF;
+END//
+DELIMITER ;
+
+Alter table addmp add column medicine_price int NOT NULL default 1000;
+Alter table addpd add column product_price int NOT NULL default 1000;
+Alter table medicines add column total_price int NOT NULL default 0;
+select * from addpd;

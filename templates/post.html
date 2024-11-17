@@ -54,6 +54,7 @@
                             <th>Product Name</th>
                             <th>Medicine Quantity</th>
                             <th>Product Quantity</th>
+                            <th>Total Price</th>
                             <th>Date</th>
                             <th class="text-center">Actions</th>
                             
@@ -67,6 +68,7 @@
                                 <td>{{ post.products }}</td>
                                 <td>{{ post.medicine_quantity }}</td>
                                 <td>{{ post.product_quantity }}</td>
+                                <td>{{ post.total_price }}</td>
                                 <td>{{ post.date }}</td> 
                                 <td class="text-center">
                                     <a href="{{ url_for('delete_order', id=post.id) }}" 

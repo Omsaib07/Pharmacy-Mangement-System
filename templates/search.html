@@ -58,15 +58,19 @@
       <!-- Add Medicines Form -->
       <form action="/addmp" method="post" class="mb-3">
         <div class="form-row align-items-end">
-          <div class="col-md-5">
+          <div class="col-md-4">
             <label for="medicine">Medicine Name</label>
             <input type="text" class="form-control" name="medicine" id="medicine" placeholder="Enter Medicine" autocomplete="on" required>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label for="quantity">Quantity</label>
             <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
           </div>
-          <div class="col-md-4 text-right">
+          <div class="col-md-3">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" name="price" id="price" placeholder="Price" step="0.01" min="0" required>
+          </div>
+          <div class="col-md-3 text-right">
             <button class="btn btn-primary mt-4" type="submit">Add Medicine</button>
           </div>
         </div>
@@ -75,15 +79,19 @@
       <!-- Add Products Form -->
       <form action="/addpd" method="post">
         <div class="form-row align-items-end">
-          <div class="col-md-5">
+          <div class="col-md-4">
             <label for="product">Product Name</label>
             <input type="text" class="form-control" name="product" id="product" placeholder="Enter Product" autocomplete="on" required>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label for="quantity">Quantity</label>
             <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantity" min="1" required>
           </div>
-          <div class="col-md-4 text-right">
+          <div class="col-md-3">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" name="price" id="price" placeholder="Price" step="0.01" min="0" required>
+          </div>
+          <div class="col-md-3 text-right">
             <button class="btn btn-primary mt-4" type="submit">Add Product</button>
           </div>
         </div>
@@ -93,8 +101,6 @@
   </div>
 
   <!-- Footer Section with Scripts -->
- 
-
   <!-- Bootstrap and JavaScript Dependencies -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
